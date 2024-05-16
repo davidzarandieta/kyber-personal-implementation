@@ -1,20 +1,20 @@
 # Based on https://github.com/GiacomoPope/kyber-py
 from polynomials import *
 from modules import *
+import random
 
-R = PolynomialRing(17, 4)
+n= 4
+p= 17
+
+R = PolynomialRing(p,n)
 M = Module(R)
 
 def genkey():
-  s0 = R([0,1,-1,1])
-  s1 = R([0,1,0,1])
+  
+  s0 = R([random.choice([-1, 0, 1]) for _ in range(n)])
+  s1 = R([random.choice([-1, 0, 1]) for _ in range(n)])
   s = M([s0,s1]).transpose()
 
-  A00 = R([11,16,16,6])
-  A01 = R([3,6,4,9])
-  A10 = R([1,10,3,5])
-  A11 = R([15,9,1,6])
-  A = M([[A00, A01],[A10, A11]])
 
   A00 = R([1,6,16,6])
   A01 = R([10,0,5,0])
