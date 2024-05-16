@@ -63,7 +63,7 @@ m_n_reduced = m_n.compress(1)
 
 # Convert each degree of x^n to a string of 1s and 0s if x^n is not present
 m_n_reduced_str = ""
-for i in range(4):
+for i in range(len(m)):
     if m_n_reduced[i] != 0:
         m_n_reduced_str += "1"
     else:
