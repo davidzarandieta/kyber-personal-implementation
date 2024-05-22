@@ -5,7 +5,7 @@ import itertools
 
 n = 3  # Parámetro de seguridad
 p = 11  # Número primo entre n^2 y 2n^2
-epsilon = 1  # Valor arbitrario > 0
+epsilon = 0.3  # Valor arbitrario > 0
 m = round((1 + epsilon) * (n + 1) * math.log(p))  # Parámetro seguridad
 
 def alpha(n):
@@ -29,12 +29,15 @@ def generar_a(m, n, p):
     # Función para generar aleatoriamente la clave a
     return [[random.randint(0, p - 1) for _ in range(n)] for _ in range(m)]
 
-def generar_e(m, alpha, n):
-    # Función para generar el error e
-    return [random.randint(0, round(alpha * (n + 1) * math.log(p))) for _ in range(m)]
+def generar_e(m, epsilon, p):
+    valores_normales = np.random.normal(loc=0, scale=epsilon, size=m)
+    valores_absolutos = np.abs(valores_normales)
+    valores_modulo_p = valores_absolutos % p
+    valores_enteros_modulo_p = np.round(valores_modulo_p).astype(int)
+    return valores_enteros_modulo_p
 
-a = generar_a(m, n, p)  # Clave pública a
-e = generar_e(m, alpha_n, n)  # Error e
+a = generar_a(m, n, p) # Clave pública a
+e = generar_e(m, epsilon, p)  # error e
 
 print("Los vectores a generados independientemente en Z_{}^{} son:".format(p, n))
 for i, vector in enumerate(a, start=1):
@@ -62,6 +65,8 @@ def choose_random_subset(m):
 S = choose_random_subset(m)  # Subconjunto S
 print("El conjunto S elegido al azar es:", S)
 
+bit = 1  # Bit a encriptar
+
 def encrypt_bit(bit, S, a, b, p):
     sum_a = np.zeros_like(a[0])
     for i in S:
@@ -73,7 +78,7 @@ def encrypt_bit(bit, S, a, b, p):
     elif bit == 1:
         return sum_a.tolist(), ((p // 2) + sum_b)
 
-bit = 0  # Bit a encriptar
+
 encrypted_values = encrypt_bit(bit, S, a, b, p)
 print("Los valores encriptados para el bit", bit, "son:", encrypted_values)
 
@@ -83,9 +88,13 @@ def decrypt(encrypted_values, s, p):
     sum_a, sum_b = encrypted_values
     dot_product = np.dot(sum_a, s)
     diff = (sum_b - dot_product)
+
+    print(diff)
+    if diff < 0: #si es neqativo se le va sumando p para obtener el mod p
+        diff += p
     
     # Verificar si la diferencia es más cercana a p/2 que a 0
-    if diff <= p // 2:
+    if diff < (p // 2)/2:
         return 0
     else:
         return 1
