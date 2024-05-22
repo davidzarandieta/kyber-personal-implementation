@@ -4,8 +4,8 @@ import numpy as np
 import itertools
 
 n = 3  # Parámetro de seguridad
-p = 11  # Número primo entre n^2 y 2n^2
-epsilon = 0.4  # Valor arbitrario > 0
+p = 17  # Número primo entre n^2 y 2n^2
+epsilon = 0.35  # Valor arbitrario > 0
 m = round((1 + epsilon) * (n + 1) * math.log(p))  # Parámetro seguridad
 
 def alpha(n):
