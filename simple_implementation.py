@@ -7,13 +7,9 @@ n = 3  # Parámetro de seguridad
 p = 17  # Número primo entre n^2 y 2n^2
 epsilon = 0.35  # Valor arbitrario > 0
 m = round((1 + epsilon) * (n + 1) * math.log(p))  # Parámetro seguridad
+alpha = 1 / (math.sqrt(n) * math.log(n)**2) # Parámetro para calcular la desviación estándar
+desviacion_estandar = alpha * math.sqrt(n)  # Desviación estándar
 
-def alpha(n):
-    # Función que satisface una distribución de probabilidad 𝜒 donde 𝛼(𝑛) es una función que satisface α(n)=o(1/(√n log n)),
-    # lo que significa que el límite de n tendiendo a infinito de α(n) es (√n log n) igual a 0.
-    return 1 / (math.sqrt(n) * math.log(n)**2)
-
-alpha_n = alpha(n)  # Valor de alpha(n)
 
 # CLAVE PRIVADA
 def generar_s(n, p):
@@ -29,12 +25,11 @@ def generar_a(m, n, p):
     # Función para generar aleatoriamente la clave a
     return [[random.randint(0, p - 1) for _ in range(n)] for _ in range(m)]
 
-def generar_e(m, epsilon, p):
-    valores_normales = np.random.normal(loc=0, scale=epsilon, size=m)
+def generar_e(m, desviacion_estandar, p):
+    valores_normales = np.random.normal(loc=0, scale=desviacion_estandar, size=m)
     valores_absolutos = np.abs(valores_normales)
-    valores_modulo_p = valores_absolutos % p
-    valores_enteros_modulo_p = np.round(valores_modulo_p).astype(int)
-    return valores_enteros_modulo_p
+    valores_enteros_error = np.round(valores_absolutos).astype(int)
+    return valores_enteros_error
 
 a = generar_a(m, n, p) # Clave pública a
 e = generar_e(m, epsilon, p)  # error e
@@ -65,7 +60,7 @@ def choose_random_subset(m):
 S = choose_random_subset(m)  # Subconjunto S
 print("El conjunto S elegido al azar es:", S)
 
-bit = 1  # Bit a encriptar
+bit = 0  # Bit a encriptar
 
 def encrypt_bit(bit, S, a, b, p):
     sum_a = np.zeros_like(a[0])
@@ -102,3 +97,28 @@ def decrypt(encrypted_values, s, p):
 
 resultado_desencriptado = decrypt(encrypted_values, s, p)
 print("El resultado desencriptado es:", resultado_desencriptado)
+
+
+""" def calcular_porcentaje_acierto(n):
+    coincidencias = 0
+
+    for _ in range(n):
+        bit_original = random.choice([0, 1])
+        s= generar_s(n, p)
+        a = generar_a(m, n, p)
+        e = generar_e(m, epsilon, p)
+        b = [calcular_bi(a_i, s, e[i]) for i, a_i in enumerate(a)]
+        S = choose_random_subset(m)
+        bit_encriptado = encrypt_bit(bit_original, S, a, b, p)
+        bit_desencriptado = decrypt(bit_encriptado, s, p)
+
+        if bit_original == bit_desencriptado:
+            coincidencias += 1
+
+    porcentaje_acierto = (coincidencias / n) * 100
+    return porcentaje_acierto
+
+# Ejemplo de uso
+n = 1000  # Número de bits a probar
+porcentaje_acierto = calcular_porcentaje_acierto(n)
+print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%") """
