@@ -19,7 +19,10 @@ def generate_e(n, desviacion_estandar):
   valores_enteros_error = np.round(valores_absolutos).astype(int)
   return list(valores_enteros_error)
 
-print("error e: ",generate_e(n, desviacion_estandar))
+e0 = R(generate_e(n, desviacion_estandar))
+e1 = R(generate_e(n, desviacion_estandar))
+e = M([e0,e1]).transpose()
+
 
 def genkey():
   
@@ -39,22 +42,17 @@ def genkey():
   A11 = R([4,2,8,9])
   A = M([[A00, A01],[A10, A11]])
 
+  b = A @ s + e
+  return A,b,s
 
-  e0 = R(generate_e(n, desviacion_estandar))
-  e1 = R(generate_e(n, desviacion_estandar))
-  e = M([e0,e1]).transpose()
-
-  t = A @ s + e
-  return A,t,s
-
-A,t,s=genkey()
+A,b,s=genkey()
 
 print("A->",A)
-print("t->",t)
+print("b->",b)
 
 m = [1,1,0,1]
 
-def encrypt(A,t,m):
+def encrypt(A,b,m):
   r0 = R(generate_e(n, desviacion_estandar)) 
   r1 = R(generate_e(n, desviacion_estandar))
   r = M([r0, r1]).transpose()
@@ -71,11 +69,11 @@ def encrypt(A,t,m):
       
   u = A.transpose() @ r + e_1
 
-  v = (t.transpose() @ r)[0][0] + e_2 - poly_m  
+  v = (b.transpose() @ r)[0][0] + e_2 - poly_m  
 
   return u,v
 
-u,v=encrypt(A,t,m)
+u,v=encrypt(A,b,m)
 print("u->",u)
 print("v->",v)
 
@@ -116,8 +114,8 @@ def calculate_accuracy(trials):
 
     for _ in range(trials):
         m = [random.randint(0, 1) for _ in range(n)]
-        A, t, s = genkey()
-        u, v = encrypt(A,t,m)
+        A, b, s = genkey()
+        u, v = encrypt(A,b,m)
         m_n_reduced_str,m_n,m_n_reduced=decrypt(u,v,s,m)
         m_str = bits_to_string(m)
 
