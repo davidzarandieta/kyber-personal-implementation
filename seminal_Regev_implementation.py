@@ -3,7 +3,7 @@ import random
 import numpy as np
 import itertools
 
-n = 3  # Parámetro de seguridad
+n = 4  # Parámetro de seguridad
 p = 17  # Número primo entre n^2 y 2n^2
 epsilon = 0.35  # Valor arbitrario > 0
 m = round((1 + epsilon) * (n + 1) * math.log(p))  # Parámetro seguridad
@@ -46,7 +46,7 @@ def calculate_bi(a, s, e):
 
 b = [calculate_bi(a_i, s, e[i]) for i, a_i in enumerate(a)]  # Calcular b_i para cada a_i
 
-print("La clave pública es:", b)
+print("La clave pública b es:", b)
 
 # ENCRIPTACION
 
@@ -101,7 +101,7 @@ print("El resultado desencriptado es:", resultado_desencriptado)
 
 #PRUEBA DE RENDIMIENTO DE LA IMPLEMENTACIÓN
 
-def calcular_porcentaje_acierto(n):
+""" def calcular_porcentaje_acierto(n):
     coincidencias = 0
 
     for _ in range(n):
@@ -122,4 +122,4 @@ def calcular_porcentaje_acierto(n):
 
 n = 1000  # Número de bits a probar
 porcentaje_acierto = calcular_porcentaje_acierto(n)
-print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%") 
+print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%")  """
