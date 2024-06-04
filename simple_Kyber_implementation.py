@@ -5,8 +5,8 @@ import random
 import numpy as np
 import math
 
-n= 5
-p= 31
+n= 200
+p= 3329
 alpha = 1 / (math.sqrt(n) * math.log(n)**2) # Parámetro para calcular la desviación estándar
 desviacion_estandar = alpha * math.sqrt(n)  # Desviación estándar
 
@@ -57,7 +57,7 @@ print("e->",e)
 print("b->",b)
 
 #ENCRIPTACIÓN
-m = [1,1,0,0,1] #el mensaje constará de n bits [0,1,...,n-1
+m = [random.randint(0,1) for _ in range(n)] #el mensaje constará de n bits [0,1,...,n-1
 
 def bits_to_string(m):
     m_str = ""
@@ -71,8 +71,8 @@ def bits_to_string(m):
 m_str = bits_to_string(m)
 
 def encrypt(A,b,m):
-  r0 = R([random.randint(-1,1) for _ in range(n)])
-  r1 = R([random.randint(-1,1) for _ in range(n)])
+  r0 = R(generate_e(n, desviacion_estandar))
+  r1 = R(generate_e(n, desviacion_estandar))
   r = M([r0, r1]).transpose()
       
   e_10 = R(generate_e(n, desviacion_estandar))
