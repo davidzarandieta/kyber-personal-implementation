@@ -101,7 +101,7 @@ print("El resultado desencriptado es:", resultado_desencriptado)
 
 #PRUEBA DE RENDIMIENTO DE LA IMPLEMENTACIÓN
 
-""" def calcular_porcentaje_acierto(n):
+def calcular_porcentaje_acierto(n):
     coincidencias = 0
 
     for _ in range(n):
@@ -122,4 +122,4 @@ print("El resultado desencriptado es:", resultado_desencriptado)
 
 n = 1000  # Número de bits a probar
 porcentaje_acierto = calcular_porcentaje_acierto(n)
-print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%")  """
+print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%")

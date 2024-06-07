@@ -5,8 +5,8 @@ import random
 import numpy as np
 import math
 
-n= 200
-p= 3329
+n= 4
+p= 17
 alpha = 1 / (math.sqrt(n) * math.log(n)**2) # Parámetro para calcular la desviación estándar
 desviacion_estandar = alpha * math.sqrt(n)  # Desviación estándar
 
