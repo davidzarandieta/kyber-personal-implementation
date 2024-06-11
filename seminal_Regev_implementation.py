@@ -46,7 +46,7 @@ def calculate_bi(a, s, e):
 
 b = [calculate_bi(a_i, s, e[i]) for i, a_i in enumerate(a)]  # Calcular b_i para cada a_i
 
-print("La clave pública b es:", b)
+print("La clave b es:", b)
 
 # ENCRIPTACION
 
@@ -60,14 +60,14 @@ def choose_random_subset(m):
 S = choose_random_subset(m)  # Subconjunto S
 print("El conjunto S elegido al azar es:", S)
 
-bit = 0  # Bit a encriptar
+bit = 1 # Bit a encriptar
 
 def encrypt_bit(bit, S, a, b, p):
     sum_a = np.zeros_like(a[0])
     for i in S:
         sum_a += a[i]
     sum_b = sum(b[i] for i in S)
-    print(sum_a, sum_b)
+    print("El resultado encriptado es", sum_a, sum_b)
     if bit == 0:
         return sum_a.tolist(), sum_b
     elif bit == 1:
@@ -84,7 +84,7 @@ def decrypt(encrypted_values, s, p):
     dot_product = np.dot(sum_a, s)
     diff = (sum_b - dot_product)
 
-    print(diff)
+    print("El resultado de la desencriptación es:", diff)
     if diff < 0: #si es neqativo se le va sumando p para obtener el mod p
         diff += p
     
@@ -95,13 +95,14 @@ def decrypt(encrypted_values, s, p):
         return 1
 
 
+
 resultado_desencriptado = decrypt(encrypted_values, s, p)
 print("El resultado desencriptado es:", resultado_desencriptado)
 
 
 #PRUEBA DE RENDIMIENTO DE LA IMPLEMENTACIÓN
 
-def calcular_porcentaje_acierto(n):
+""" def calcular_porcentaje_acierto(n):
     coincidencias = 0
 
     for _ in range(n):
@@ -122,4 +123,4 @@ def calcular_porcentaje_acierto(n):
 
 n = 1000  # Número de bits a probar
 porcentaje_acierto = calcular_porcentaje_acierto(n)
-print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%")
+print(f"El porcentaje de acierto es: {porcentaje_acierto:.2f}%") """

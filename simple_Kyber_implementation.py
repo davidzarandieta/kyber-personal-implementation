@@ -6,10 +6,10 @@ import numpy as np
 import math
 
 
-n= 5
-p= 31
+n= 7
+p= 51
 alpha = 1 / (math.sqrt(n) * math.log(n)**2) # Parámetro para calcular la desviación estándar
-desviacion_estandar = alpha * math.sqrt(n)  # Desviación estándar
+desviacion_estandar = alpha * n  # Desviación estándar
 
 R = PolynomialRing(p,n)
 M = Module(R)
@@ -23,6 +23,8 @@ def generate_s(n):
   return s
 
 s = generate_s(n)
+
+print("s->",s)
 
 #GENERAR CLAVE PÚBLICA
 def generate_a(n):
@@ -119,7 +121,6 @@ print("Reduced message: ", m_str)
 print("Reduced: ",m_n_reduced)
 print("Decrypted: ",m_n_reduced_str)
 
-
 """ def calculate_accuracy(trials):
     correct_count = 0
 
@@ -144,4 +145,4 @@ print("Decrypted: ",m_n_reduced_str)
 # Ejemplo de uso
 trials = 20000  # Número de pruebas a realizar
 accuracy = calculate_accuracy(trials)
-print(f"El porcentaje de acierto es: {accuracy:.2f}%")      """
+print(f"El porcentaje de acierto es: {accuracy:.2f}%")     """
