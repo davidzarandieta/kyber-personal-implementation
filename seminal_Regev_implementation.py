@@ -26,6 +26,7 @@ def generate_a(m, n, p):
     return [[random.randint(0, p - 1) for _ in range(n)] for _ in range(m)]
 
 def generate_e(m, desviacion_estandar, p):
+    # Función para generar el error e
     valores_normales = np.random.normal(loc=0, scale=desviacion_estandar, size=m)
     valores_absolutos = np.abs(valores_normales)
     valores_enteros_error = np.round(valores_absolutos).astype(int)
@@ -63,13 +64,16 @@ print("El conjunto S elegido al azar es:", S)
 bit = 1 # Bit a encriptar
 
 def encrypt_bit(bit, S, a, b, p):
+    # Calcular la suma de los vectores a y b para los elementos en S
     sum_a = np.zeros_like(a[0])
     for i in S:
         sum_a += a[i]
     sum_b = sum(b[i] for i in S)
     print("El resultado encriptado es", sum_a, sum_b)
+    # Si el bit es 0, devolver la suma de los vectores a y b
     if bit == 0:
         return sum_a.tolist(), sum_b
+    # Si el bit es 1, devolver la suma de los vectores a y b más p/2
     elif bit == 1:
         return sum_a.tolist(), ((p // 2) + sum_b)
 
