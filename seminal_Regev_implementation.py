@@ -9,6 +9,7 @@ epsilon = 0.35  # Valor arbitrario > 0
 m = round((1 + epsilon) * (n + 1) * math.log(p))  # Parámetro seguridad
 alpha = 1 / (math.sqrt(n) * math.log(n)**2) # Parámetro para calcular la desviación estándar
 desviacion_estandar = alpha * math.sqrt(n)  # Desviación estándar
+bit = 1 # Bit a encriptar
 
 
 # CLAVE PRIVADA
@@ -49,7 +50,7 @@ b = [calculate_bi(a_i, s, e[i]) for i, a_i in enumerate(a)]  # Calcular b_i para
 
 print("La clave b es:", b)
 
-# ENCRIPTACION
+# ENCRIPTADO
 
 def choose_random_subset(m):
     # Generar todos los subconjuntos posibles de [m]
@@ -61,7 +62,7 @@ def choose_random_subset(m):
 S = choose_random_subset(m)  # Subconjunto S
 print("El conjunto S elegido al azar es:", S)
 
-bit = 1 # Bit a encriptar
+
 
 def encrypt_bit(bit, S, a, b, p):
     # Calcular la suma de los vectores a y b para los elementos en S
@@ -69,7 +70,6 @@ def encrypt_bit(bit, S, a, b, p):
     for i in S:
         sum_a += a[i]
     sum_b = sum(b[i] for i in S)
-    print("El resultado encriptado es", sum_a, sum_b)
     # Si el bit es 0, devolver la suma de los vectores a y b
     if bit == 0:
         return sum_a.tolist(), sum_b
@@ -81,7 +81,7 @@ def encrypt_bit(bit, S, a, b, p):
 encrypted_values = encrypt_bit(bit, S, a, b, p)
 print("Los valores encriptados para el bit", bit, "son:", encrypted_values)
 
-# DESENCRIPTACION
+# DESENCRIPTADO
 
 def decrypt(encrypted_values, s, p):
     sum_a, sum_b = encrypted_values
